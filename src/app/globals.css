@@ -24,3 +24,55 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.article-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: #d4d4d4;
+}
+
+.article-content h2 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 2rem 0 1rem;
+  font-family: 'Georgia', serif;
+}
+
+.article-content h3 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.article-content a {
+  color: #C8102E;
+  text-decoration: underline;
+}
+
+.article-content ul, .article-content ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+  color: #d4d4d4;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.article-content blockquote {
+  border-left: 3px solid #C8102E;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: #a1a1aa;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.article-content img {
+  width: 100%;
+  height: auto;
+  margin: 2rem 0;
+}
