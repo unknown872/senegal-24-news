@@ -18,9 +18,9 @@ export async function generateMetadata({ params }) {
       description: post.excerpt?.replace(/<[^>]*>/g, "").slice(0, 160),
       url: `https://senegal24.com/actualites/${post.slug}`,
       publishedTime: post.date,
-      authors: [post.author?.node?.name],
-      images: post.featuredImage?.node?.sourceUrl
-        ? [{ url: post.featuredImage.node.sourceUrl, width: 1200, height: 630, alt: post.title }]
+      authors: [post.author?.name],
+      images: post.featuredImage?.url
+        ? [{ url: post.featuredImage.url, width: 1200, height: 630, alt: post.title }]
         : [],
     },
   };
@@ -42,10 +42,10 @@ export default async function ArticlePage({ params }) {
 
       {/* Hero Image */}
       <div className="relative w-full" style={{ height: "500px" }}>
-        {post.featuredImage?.node?.sourceUrl ? (
+        {post.featuredImage?.url ? (
           <Image
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || post.title}
+            src={post.featuredImage?.url}
+            alt={post.featuredImage.altText || post.title}
             fill
             className="object-cover"
             priority
@@ -61,12 +61,12 @@ export default async function ArticlePage({ params }) {
           }}
         />
         <div className="absolute bottom-0 left-0 right-0 p-5 md:p-10 max-w-7xl mx-auto">
-          {post.categories?.nodes?.[0] && (
+          {post.categories?.[0] && (
             <span
               style={{ background: "#C8102E" }}
               className="text-white text-xs font-black uppercase tracking-widest px-3 py-1 inline-block mb-3"
             >
-              {post.categories.nodes[0].name}
+              {post.categories?.[0].name}
             </span>
           )}
           <h1
@@ -93,11 +93,11 @@ export default async function ArticlePage({ params }) {
               className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm flex-shrink-0"
               style={{ background: "#C8102E" }}
             >
-              {post.author?.node?.name?.charAt(0)}
+              {post.author?.name?.charAt(0)}
             </div>
             <div>
               <p className="text-white text-sm font-bold">
-                {post.author?.node?.name}
+                {post.author?.name}
               </p>
               <p className="text-zinc-500 text-xs">
                 {new Date(post.date).toLocaleDateString("fr-FR", {
@@ -123,7 +123,7 @@ export default async function ArticlePage({ params }) {
           {/* Contenu */}
           <div
             className="article-content text-zinc-300 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: post.content?.html }}
           />
         </div>
 

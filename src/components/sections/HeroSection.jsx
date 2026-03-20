@@ -25,10 +25,10 @@ export default function HeroSection({ featured, secondary }) {
               key={post.id}
               className="relative overflow-hidden group cursor-pointer flex-1"
             >
-              {post.featuredImage?.node?.sourceUrl ? (
+              {post.featuredImage?.url ? (
                 <Image
-                  src={post.featuredImage.node.sourceUrl}
-                  alt={post.featuredImage.node.altText || post.title}
+                  src={post.featuredImage.url}
+                  alt={post.featuredImage.altText || post.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -43,12 +43,12 @@ export default function HeroSection({ featured, secondary }) {
                 }}
               />
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                {post.categories?.nodes?.[0] && (
+                {post.categories?.[0] && (
                   <span
                     style={{ background: "#C8102E" }}
                     className="text-white text-xs font-bold uppercase tracking-widest px-2 py-0.5 inline-block mb-2"
                   >
-                    {post.categories.nodes[0].name}
+                    {post.categories?.[0].name}
                   </span>
                 )}
                 <h3
@@ -57,7 +57,7 @@ export default function HeroSection({ featured, secondary }) {
                 >
                   <Link
                     href={`/actualites/${post.slug}`}
-                    className="hover:text-red-400 transition-colors"
+                    className="hover:text-red-500 transition-colors"
                   >
                     {post.title}
                   </Link>

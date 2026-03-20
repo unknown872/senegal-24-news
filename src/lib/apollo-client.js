@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://actu-news.ct.ws/graphql",
+    uri: process.env.NEXT_PUBLIC_WORDPRESS_URL,
   }),
   cache: new InMemoryCache(),
   defaultOptions: {

@@ -28,10 +28,10 @@ export default function FeaturedArticle({ posts }) {
           className="absolute inset-0 transition-opacity duration-700"
           style={{ opacity: i === current ? 1 : 0 }}
         >
-          {p.featuredImage?.node?.sourceUrl ? (
+          {p.featuredImage?.url ? (
             <Image
-              src={p.featuredImage.node.sourceUrl}
-              alt={p.featuredImage.node.altText || p.title}
+              src={p.featuredImage.url}
+              alt={p.featuredImage.altText || p.title}
               fill
               className="object-cover"
             />
@@ -52,12 +52,12 @@ export default function FeaturedArticle({ posts }) {
 
       {/* Contenu */}
       <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 z-20">
-        {post.categories?.nodes?.[0] && (
+        {post.categories?.[0].name && (
           <span
             style={{ background: "#C8102E" }}
             className="text-white text-xs font-bold uppercase tracking-widest px-3 py-1 mb-3 inline-block"
           >
-            {post.categories.nodes[0].name}
+            {post.categories?.[0].name}
           </span>
         )}
         <h2
@@ -66,14 +66,12 @@ export default function FeaturedArticle({ posts }) {
         >
           <Link
             href={`/actualites/${post.slug}`}
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-500 transition-colors"
           >
             {post.title}
           </Link>
         </h2>
         <div className="hidden md:flex items-center gap-3 mt-4 text-zinc-400 text-xs">
-          <span className="font-bold text-white">{post.author?.node?.name}</span>
-          <span>·</span>
           <span>
             {new Date(post.date).toLocaleDateString("fr-FR", {
               day: "numeric", month: "long", year: "numeric",
@@ -102,14 +100,14 @@ export default function FeaturedArticle({ posts }) {
       {/* Boutons Prev / Next */}
       <button
         onClick={prev}
-        className="absolute cursor-pointer left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-white hover:text-red-400 transition-colors"
+        className="absolute cursor-pointer left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-white hover:text-red-500 transition-colors"
         style={{ background: "rgba(0,0,0,0.5)", padding: "8px 12px", fontSize: "18px" }}
       >
         ‹
       </button>
       <button
         onClick={next}
-        className="absolute cursor-pointer right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-white hover:text-red-400 transition-colors"
+        className="absolute cursor-pointer right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-white hover:text-red-500 transition-colors"
         style={{ background: "rgba(0,0,0,0.5)", padding: "8px 12px", fontSize: "18px" }}
       >
         ›

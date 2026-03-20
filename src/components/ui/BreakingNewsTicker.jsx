@@ -14,7 +14,7 @@ export default function BreakingNewsTicker({ posts }) {
         setCurrent((prev) => (prev + 1) % posts.length);
         setVisible(true);
       }, 500);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [posts.length]);
 

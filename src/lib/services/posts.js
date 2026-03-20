@@ -2,28 +2,22 @@ import { gql } from "@apollo/client";
 import client from "@/lib/apollo-client";
 
 const POST_FIELDS = gql`
-  fragment PostFields on Post {
+  fragment PostFields on Article {
     id
     title
     slug
     date
     excerpt
     featuredImage {
-      node {
-        sourceUrl
-        altText
-      }
+      url
+      altText: fileName
     }
     categories {
-      nodes {
-        name
-        slug
-      }
+      name
+      slug
     }
     author {
-      node {
-        name
-      }
+      name
     }
   }
 `;
@@ -31,10 +25,8 @@ const POST_FIELDS = gql`
 const GET_POSTS = gql`
   ${POST_FIELDS}
   query GetPosts {
-    posts(first: 20) {
-      nodes {
-        ...PostFields
-      }
+    articles(first: 20, orderBy: date_DESC) {
+      ...PostFields
     }
   }
 `;
@@ -42,9 +34,23 @@ const GET_POSTS = gql`
 const GET_POSTS_BY_CATEGORY = gql`
   ${POST_FIELDS}
   query GetPostsByCategory($slug: String!, $first: Int!) {
-    posts(where: { categoryName: $slug }, first: $first) {
-      nodes {
-        ...PostFields
+    articles(
+      first: $first
+      orderBy: date_DESC
+      where: { categories_some: { slug: $slug } }
+    ) {
+      ...PostFields
+    }
+  }
+`;
+
+const GET_POST_BY_SLUG = gql`
+  ${POST_FIELDS}
+  query GetPostBySlug($slug: String!) {
+    article(where: { slug: $slug }) {
+      ...PostFields
+      content {
+        html
       }
     }
   }
@@ -56,7 +62,7 @@ export async function getPosts() {
     fetchPolicy: "no-cache",
     context: { fetchOptions: { cache: "no-store" } },
   });
-  return data?.posts?.nodes;
+  return data?.articles;
 }
 
 export async function getPostsByCategory(slug, first = 5) {
@@ -66,18 +72,8 @@ export async function getPostsByCategory(slug, first = 5) {
     fetchPolicy: "no-cache",
     context: { fetchOptions: { cache: "no-store" } },
   });
-  return data?.posts?.nodes;
+  return data?.articles;
 }
-
-const GET_POST_BY_SLUG = gql`
-  ${POST_FIELDS}
-  query GetPostBySlug($slug: String!) {
-    postBy(slug: $slug) {
-      ...PostFields
-      content
-    }
-  }
-`;
 
 export async function getPostBySlug(slug) {
   const { data } = await client.query({
@@ -86,5 +82,5 @@ export async function getPostBySlug(slug) {
     fetchPolicy: "no-cache",
     context: { fetchOptions: { cache: "no-store" } },
   });
-  return data?.postBy;
+  return data?.article;
 }

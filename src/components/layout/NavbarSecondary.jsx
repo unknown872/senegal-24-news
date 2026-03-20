@@ -2,16 +2,21 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function NavbarSecondary({ categories }) {
   const [scrolled, setScrolled] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(90);
 
+  const pathname = usePathname();
+
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
       setScrolled(isScrolled);
-      const navbar = document.querySelector("nav") || document.querySelector("[data-navbar]");
+      const navbar =
+        document.querySelector("nav") ||
+        document.querySelector("[data-navbar]");
       if (navbar) setNavbarHeight(navbar.offsetHeight);
     };
     window.addEventListener("scroll", handleScroll);
@@ -32,7 +37,7 @@ export default function NavbarSecondary({ categories }) {
         zIndex: 30,
         animation: "slideDown 0.3s ease",
       }}
-      className="px-6 hidden md:flex"
+      className="px-6hidden md:flex"
     >
       <style>{`
         @keyframes slideDown {
@@ -41,11 +46,30 @@ export default function NavbarSecondary({ categories }) {
         }
       `}</style>
       <div className="max-w-7xl mx-auto flex items-center justify-center gap-1 overflow-x-auto">
-        <Link href="/" className="text-zinc-400 text-xs font-bold uppercase tracking-widest px-4 py-3 whitespace-nowrap hover:text-white border-b-2 border-transparent hover:border-red-600 transition-all">
+        <Link
+          href="/"
+          className="text-xs font-bold uppercase tracking-widest px-4 py-3 whitespace-nowrap border-b-2 transition-all"
+          style={{
+            color: pathname === "/" ? "#ffffff" : "#71717a",
+            borderColor: pathname === "/" ? "#C8102E" : "transparent",
+          }}
+        >
           À la une
         </Link>
         {categories?.map((cat) => (
-          <Link key={cat.id} href={`/categorie/${cat.slug}`} className="text-zinc-400 text-xs font-bold uppercase tracking-widest px-4 py-3 whitespace-nowrap hover:text-white border-b-2 border-transparent hover:border-red-600 transition-all">
+          <Link
+            key={cat.id}
+            href={`/categorie/${cat.slug}`}
+            className="text-xs font-bold uppercase tracking-widest px-4 py-3 whitespace-nowrap border-b-2 transition-all"
+            style={{
+              color:
+                pathname === `/categorie/${cat.slug}` ? "#ffffff" : "#71717a",
+              borderColor:
+                pathname === `/categorie/${cat.slug}`
+                  ? "#C8102E"
+                  : "transparent",
+            }}
+          >
             {cat.name}
           </Link>
         ))}

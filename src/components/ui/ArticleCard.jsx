@@ -5,23 +5,23 @@ export default function ArticleCard({ post }) {
   return (
     <article className="group cursor-pointer" style={{ marginBottom: "1.5rem" }}>
       <div className="relative overflow-hidden" style={{ height: "200px" }}>
-        {post.featuredImage?.node?.sourceUrl ? (
+        {post.featuredImage?.url ? (
           <Image
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || post.title}
+            src={post.featuredImage.url}
+            alt={post.featuredImage.altText || post.title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-700"
           />
         ) : (
           <div className="w-full h-full bg-zinc-800" />
         )}
-        {post.categories?.nodes?.[0] && (
+        {post.categories?.[0]?.name && (
           <div className="absolute bottom-0 left-0 right-0 flex justify-center">
             <span
               style={{ background: "#C8102E" }}
               className="text-white text-xs font-black uppercase tracking-widest px-6 py-1.5"
             >
-              {post.categories.nodes[0].name}
+              {post.categories?.[0].name}
             </span>
           </div>
         )}
@@ -35,7 +35,7 @@ export default function ArticleCard({ post }) {
           {post.categories?.nodes?.[0]?.name}
         </p>
         <h3
-          className="text-white text-base md:text-lg font-black leading-snug uppercase group-hover:text-red-400 transition-colors"
+          className="text-white text-base md:text-lg font-black leading-snug uppercase group-hover:text-red-500 transition-colors"
           style={{ fontFamily: "'Georgia', serif" }}
         >
           <Link href={`/actualites/${post.slug}`}>{post.title}</Link>

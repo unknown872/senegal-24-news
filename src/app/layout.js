@@ -56,7 +56,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="fr">
-      <body style={{ background: "#0F0F0F", paddingTop: "80px" }}>
+      <body style={{ background: "#0F0F0F", paddingTop: "116px" }}>
         <TopBar categories={categories}/>
         <Navbar categories={categories} />
         <NavbarSecondary categories={categories} />

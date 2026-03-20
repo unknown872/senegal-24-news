@@ -4,12 +4,20 @@ import client from "@/lib/apollo-client";
 const GET_CATEGORIES = gql`
   query GetCategories {
     categories {
-      nodes {
-        id
-        name
-        slug
-        count
-      }
+      id
+      name
+      slug
+    }
+  }
+`;
+
+const GET_CATEGORY_BY_SLUG = gql`
+  query GetCategoryBySlug($slug: String!) {
+    category(where: { slug: $slug }) {
+      id
+      name
+      slug
+      description
     }
   }
 `;
@@ -18,26 +26,10 @@ export async function getCategories() {
   const { data } = await client.query({
     query: GET_CATEGORIES,
     fetchPolicy: "no-cache",
-    context: {
-      fetchOptions: {
-        cache: "no-store",
-      },
-    },
+    context: { fetchOptions: { cache: "no-store" } },
   });
-  return data?.categories?.nodes;
+  return data?.categories;
 }
-
-const GET_CATEGORY_BY_SLUG = gql`
-  query GetCategoryBySlug($slug: ID!) {
-    category(id: $slug, idType: SLUG) {
-      id
-      name
-      slug
-      description
-      count
-    }
-  }
-`;
 
 export async function getCategoryBySlug(slug) {
   const { data } = await client.query({
