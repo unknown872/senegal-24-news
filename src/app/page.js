@@ -10,7 +10,7 @@ export default async function Home() {
     getPostsByCategory("sport", 5),
   ]);
 
-  const featured = posts?.slice(0, 6);
+  const featured = posts?.slice(0, 3);
   const secondary = posts?.slice(0, 2);
   const rest = posts?.slice(0, 16);
 

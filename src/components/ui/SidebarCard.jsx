@@ -3,33 +3,62 @@ import Image from "next/image";
 
 export default function SidebarCard({ post }) {
   return (
-    <article className="group flex gap-3 cursor-pointer" style={{ borderBottom: "1px solid #2A2A2A", paddingBottom: "1rem", marginBottom: "1rem" }}>
-      <div className="relative overflow-hidden flex-shrink-0" style={{ width: "80px", height: "80px" }}>
-        {post.featuredImage?.node?.sourceUrl ? (
-          <Image
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || post.title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700"
-          />
-        ) : (
-          <div className="w-full h-full bg-zinc-800" />
-        )}
-      </div>
-      <div className="flex-1">
-        <h4
-          className="text-white text-sm font-bold leading-snug group-hover:text-red-400 transition-colors"
-          style={{ fontFamily: "'Georgia', serif" }}
+    <article
+      className="group cursor-pointer"
+      style={{ marginBottom: "0.75rem" }}
+    >
+      <Link href={`/actualites/${post.slug}`}>
+        <div
+          className="relative overflow-hidden"
+          style={{ height: "110px" }}
         >
-          <Link href={`/actualites/${post.slug}`}>{post.title}</Link>
-        </h4>
-        <p className="text-zinc-500 text-xs mt-1">
-          {new Date(post.date).toLocaleDateString("fr-FR", {
-            day: "numeric",
-            month: "long",
-          })}
-        </p>
-      </div>
+          {/* Image de fond */}
+          {post.featuredImage?.url ? (
+            <Image
+              src={post.featuredImage.url}
+              alt={post.featuredImage.altText || post.title}
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+          ) : (
+            <div className="w-full h-full" style={{ background: "#1A1A1A" }} />
+          )}
+
+          {/* Overlay dégradé */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)",
+            }}
+          />
+
+          {/* Contenu */}
+          <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+            {/* Titre */}
+            <h4
+              className="text-white text-xs font-bold leading-snug group-hover:text-red-500 transition-colors duration-200 line-clamp-3"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
+              {post.title}
+            </h4>
+
+            {/* Date */}
+            <div className="flex items-center gap-1 mt-1">
+              <span
+                style={{ background: "#C8102E" }}
+                className="w-1 h-1 rounded-full inline-block"
+              />
+              <p className="text-zinc-400 text-xs">
+                {new Date(post.date).toLocaleDateString("fr-FR", {
+                  day: "numeric",
+                  month: "long",
+                })}
+              </p>
+            </div>
+          </div>
+        </div>
+      </Link>
     </article>
   );
 }
